@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Graph Editor</title>
+    <title>Px</title>
     <meta charset="utf-8">
 
     <!-- Libraries -->
@@ -30,25 +30,28 @@
     <link rel="stylesheet" href="demo.css">
   </head>
   <body>
+    <div id="graph-holder">
+      <the-graph-editor id="editor"
+        width="100%"
+        height="600"
+        grid="72"
+        snap="36"
+        theme="dark">
+      </the-graph-editor>
+      <the-graph-nav id="nav" width="216" height="162"></the-graph-nav>
+      <div id="testing">
+        <select id="nodetype"></select>
+        <button id="addnode" style="margin-right: 40px">add node</button>
+        <button id="get">save graph</button>
+        <button id="load">load graph</button>
+        <button id="autolayout">autolayout</button>
+        <button id="clear">clear</button>
+      </div>
+    </div>
 
-    <the-graph-editor id="editor"
-      width="800" height="600"
-      grid="72"
-      snap="36"
-      theme="dark">
-    </the-graph-editor>
-
-    <the-graph-nav id="nav" width="216" height="162"></the-graph-nav>
     <script src="demo.js"></script>
 
-    <div id="testing">
-      <select id="nodetype"></select>
-      <button id="addnode" style="margin-right: 40px">add node</button>
-      <button id="get">save graph</button>
-      <button id="load">load graph</button>
-      <button id="autolayout">autolayout</button>
-      <button id="clear">clear</button>
-    </div>
+
     <div id="loading" style="position:absolute; top:10px; left:10px; background-color:white; padding:10px; border-radius:5px;">
       <img src="assets/loading.gif"/>
       <div id="loading-message">loading custom elements...</div>

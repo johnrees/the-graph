@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Px</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Roboto Mono', Roboto, Helvetica, Arial, sans;
+    }
+    iframe {
+      min-width: 400px;
+      flex: 1;
+      height: 100vh;
+    }
+    #container {
+      display: flex;
+      height: 100vh;
+    }
+    #side {
+      width: 400px;
+      resize: horizontal;
+      height: 100%;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="side">
+      <h1 id="title"></h1>
+      <div id="inports"></div>
+      <div id="outports"></div>
+    </div>
+    <iframe src="demo.html" frameBorder="0"></iframe>
+  </div>
+</body>
+</html>

@@ -14,9 +14,9 @@ window.addEventListener('polymer-ready', function() {
       description: '',
       icon: 'pencil',
       inports: [
-        {name: 'element_id', type: 'all'},
-        {name: 'width', type: 'all'},
-        {name: 'height', type: 'all'}
+        {name: 'element_id', type: 'string'},
+        {name: 'width', type: 'number', input: 'range'},
+        {name: 'height', type: 'number', input: 'range'}
       ],
       outports: [
         {name: 'svg', type: 'svg'}
@@ -26,54 +26,32 @@ window.addEventListener('polymer-ready', function() {
       description: '',
       icon: 'resize',
       inports: [
-        {name: 'points', type: 'all'},
-        {name: 'delta', type: 'all'},
-        {name: 'miter_limit', type: 'all'},
-        {name: 'join_type', type: 'all'},
-        {name: 'autofix', type: 'all'},
-        {name: 'convert', type: 'all'}
+        {name: 'points', type: 'array'},
+        {name: 'delta', type: 'number'},
+        {name: 'miter_limit', type: 'number'},
+        {name: 'join_type', type: 'string'},
+        {name: 'autofix', type: 'boolean'},
+        {name: 'convert', type: 'boolean'}
       ],
       outports: [
         {name: 'points', type: 'svg'}
       ]
-    },
-    basic: {
-      description: 'basic demo component',
-      icon: 'eye',
-      inports: [
-        {'name': 'in0', 'type': 'all'},
-        {'name': 'in1', 'type': 'all'},
-        {'name': 'in2', 'type': 'all'}
-      ],
-      outports: [
-        {'name': 'out', 'type': 'all'}
-      ]
-    },
-    tall: {
-      description: 'tall demo component',
-      icon: 'cog',
-      inports: [
-        {'name': 'in0', 'type': 'all'},
-        {'name': 'in1', 'type': 'all'},
-        {'name': 'in2', 'type': 'all'},
-        {'name': 'in3', 'type': 'all'},
-        {'name': 'in4', 'type': 'all'},
-        {'name': 'in5', 'type': 'all'},
-        {'name': 'in6', 'type': 'all'},
-        {'name': 'in7', 'type': 'all'},
-        {'name': 'in8', 'type': 'all'},
-        {'name': 'in9', 'type': 'all'},
-        {'name': 'in10', 'type': 'all'},
-        {'name': 'in11', 'type': 'all'},
-        {'name': 'in12', 'type': 'all'}
-      ],
-      outports: [
-        {'name': 'out0', 'type': 'all'}
-      ]
     }
   };
   editor.$.graph.library = library;
-  editor.$.graph.onNodeSelection = function(itemKey, item, toggle) { if(itemKey) { console.log(itemKey, item, toggle); window.open("", "", "width=500,height=400,menubar=no,resizable=yes,status=no,toolbar=no"); } }
+  editor.$.graph.onNodeSelection = function(itemKey, item, toggle) {
+    if(itemKey) {
+      console.log(itemKey, item, toggle);
+      // var popup = window.open("popup.html", "", "width=500,height=400,menubar=no,resizable=yes,status=no,toolbar=no");
+      // popup.window.onload = function() {
+      //   popup.document.getElementById('h1').innerHTML = itemKey;
+      // }
+      parent.document.getElementById('title').innerHTML = item.component.split('/')[1]
+      parent.document.getElementById('inports').innerHTML = library[item.component].inports.map(inport => (
+        `<p><input type='${inport.input || 'text'}' placeholder='${inport.name}' /></p>`
+      )).join("")
+    }
+  }
   editor.$.graph.onEdgeSelection = function(itemKey, item, toggle) { if (itemKey) { console.log(itemKey, item, toggle) }}
   editor.$.graph.onEdgeSelection = function(itemKey, item, toggle) { if (itemKey) { console.log(itemKey, item, toggle) }}
 
@@ -98,8 +76,8 @@ window.addEventListener('polymer-ready', function() {
     var component = document.getElementById('nodetype').value; //Math.random() > 0.5 ? 'basic' : 'tall';
     var metadata = {
       label: component,
-      x: Math.round(Math.random()*800),
-      y: Math.round(Math.random()*600)
+      x: Math.round(Math.random()*window.innerWidth),
+      y: Math.round(Math.random()*window.innerHeight)
     };
     var newNode = editor.fbpGraph.addNode(id, component, metadata);
     // editor.graph.addEventListener('addNode', function(event) { alert('edge') })
@@ -110,6 +88,11 @@ window.addEventListener('polymer-ready', function() {
     return newNode;
   };
   document.getElementById("addnode").addEventListener("click", addnode);
+
+  // function doubleClickHandler(event) {
+  //   addnode(event.clientX, event.clientY)
+  // }
+  // document.addEventListener("dblclick", doubleClickHandler);
 
   // Autolayout button
   document.getElementById("autolayout").addEventListener("click", function () {
